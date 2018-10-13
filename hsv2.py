@@ -62,7 +62,7 @@ while(1):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower, upper)
     output = cv2.bitwise_and(img,img, mask= mask)
-    output2 = cv2.resize(output,None,fx=0.2, fy=0.2)
+    output2 = cv2.resize(output,None,fx=1, fy=1)
     bilateral = cv2.bilateralFilter(output2, 15, 75, 75)
     gaussian = cv2.GaussianBlur(bilateral, (15,15), 0)
 
