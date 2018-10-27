@@ -60,11 +60,12 @@ while(1):
 
     # Create HSV Image and threshold into a range.
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv, lower, upper)
+    gaussian = cv2.GaussianBlur(hsv, (15,15), 0)
+    mask = cv2.inRange(gaussian, lower, upper)
     output = cv2.bitwise_and(img,img, mask= mask)
     output2 = cv2.resize(output,None,fx=1, fy=1)
-    bilateral = cv2.bilateralFilter(output2, 15, 75, 75)
-    gaussian = cv2.GaussianBlur(bilateral, (15,15), 0)
+    # bilateral = cv2.bilateralFilter(output2, 15, 75, 75)
+    
 
     # Print if there is a change in HSV value
     if( (phMin != hMin) | (psMin != sMin) | (pvMin != vMin) | (phMax != hMax) | (psMax != sMax) | (pvMax != vMax) ):
@@ -77,7 +78,7 @@ while(1):
         pvMax = vMax
 
     # Display output image
-    cv2.imshow('image',gaussian)
+    cv2.imshow('image',output2)
 
 
     # Wait longer to prevent freeze for videos.

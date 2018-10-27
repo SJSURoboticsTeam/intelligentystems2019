@@ -12,12 +12,12 @@ while True:
 	hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
 	# Gaussian Blur and Bilateral Filter
-	hsv2 = cv2.bilateralFilter(hsv, 15, 75, 75)
-	hsv3 = cv2.GaussianBlur(hsv2, (15,15), 0)
+	# hsv2 = cv2.bilateralFilter(hsv, 15, 75, 75)
+	hsv3 = cv2.GaussianBlur(hsv, (9,9), 0)
 
 	
-	lower_green = np.array([29, 60, 0])
-	upper_green = np.array([44, 153, 255])
+	lower_green = np.array([30, 42, 75])
+	upper_green = np.array([89, 255, 255])
 
 	mask = cv2.inRange(hsv, lower_green, upper_green)
 	res = cv2.bitwise_and(frame, frame, mask = mask)
