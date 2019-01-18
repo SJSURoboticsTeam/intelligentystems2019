@@ -6,7 +6,7 @@ import numpy as np
 def nothing(x):
     pass
 
-useCamera=True
+useCamera=False
 
 # Create a window
 cv2.namedWindow('image')
