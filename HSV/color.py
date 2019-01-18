@@ -4,12 +4,26 @@ import numpy as np
 cap = cv2.VideoCapture(0)
 
 
+# If more than one blob exists, shift to DL
+# If one blob exists check if in proper size range
+
+
+# Profiles
+# High sunlight
+# Low sunlight
+# Normal
+
+
+
 while True:
 	_, frame = cap.read()
+	img = cv2.imread('quantt.png')
 
 	#gb = cv2.GaussianBlur(frame, (3, 3), 0)
 
-	hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	# replace 'img' with 'frame' to use webcam
+
+	hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
 	# Gaussian Blur and Bilateral Filter
 	# hsv2 = cv2.bilateralFilter(hsv, 15, 75, 75)
@@ -20,9 +34,9 @@ while True:
 	upper_green = np.array([89, 255, 255])
 
 	mask = cv2.inRange(hsv, lower_green, upper_green)
-	res = cv2.bitwise_and(frame, frame, mask = mask)
+	res = cv2.bitwise_and(img, img, mask = mask)
 
-	cv2.imshow('frame', frame)
+	cv2.imshow('frame', img)
 	cv2.imshow('mask', mask)
 	cv2.imshow('res', res)
 
@@ -58,12 +72,18 @@ while True:
 			print("straight")
 		elif xval > 800 and xval <1200:
 			print("right")
-		#yval = keypoints[0].pt[1]
+		yval = keypoints[0].pt[1]
 		diameter = keypoints[0].size
+
+
+		if len(keypoints) > 1:
+			print("More than one blob");
+		else:
+			cv2.circle(img,(int(xval), int(yval)), 25, (255, 0,0 ), -1)
 		#print (xval, ", ", yval, ", ", diameter)
 
 
-		#cv2.circle(frame,(int(xval), int(yval)), 25, (255, 0,0 ), -1)
+		
 	except IndexError:
 		print("none")
 
@@ -78,7 +98,7 @@ while True:
 		print("err")
 	'''
 
-	cv2.imshow('frame', frame)
+	cv2.imshow('frame', img)
 	cv2.imshow('mask', mask)
 	cv2.imshow('res', res)
 	
